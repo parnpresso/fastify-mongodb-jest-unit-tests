@@ -1,15 +1,12 @@
-const fastify = require('fastify')({
-  logger: true
-})
+const fastify = require('fastify')
 
-fastify.get('/', function (request, reply) {
-  reply.send({ hello: 'world' })
-})
+function build(opts={}) {
+  const app = fastify(opts)
+  app.get('/', async function (request, reply) {
+    return { hello: 'world' }
+  })
 
-fastify.listen(3000, function (err, address) {
-  if (err) {
-    fastify.log.error(err)
-    process.exit(1)
-  }
-  fastify.log.info(`server listening on ${address}`)
-})
+  return app
+}
+
+module.exports = build
